@@ -1,6 +1,6 @@
 # Actions
 
-There are lots of predefined `fastlane` actions you can use. If you have ideas for more, please [let me know](https://github.com/KrauseFx/fastlane/issues/new).
+There are lots of predefined `fastlane` actions you can use. If you have ideas for more, please [let me know](https://github.com/fastlane/fastlane/issues/new).
 
 To get the most up-to-date information from the command line on your current verion you can also run:
 
@@ -99,7 +99,7 @@ Add this action to your `appstore` lane. Keep in mind this action might take sev
 verify_xcode
 ```
 
-### [snapshot](https://github.com/KrauseFx/snapshot)
+### [snapshot](https://github.com/fastlane/snapshot)
 
 ```ruby
 snapshot
@@ -114,7 +114,7 @@ snapshot(
 )
 ```
 
-Take a look at the [prefilling data guide](https://github.com/KrauseFx/snapshot#prefilling) on the `snapshot` documentation.
+Take a look at the [prefilling data guide](https://github.com/fastlane/snapshot#prefilling) on the `snapshot` documentation.
 
 ### clear_derived_data
 
@@ -128,7 +128,7 @@ clear_derived_data
 
 Build your app right inside `fastlane` and the path to the resulting ipa is automatically available to all other actions.
 
-You should check out the [code signing guide](https://github.com/KrauseFx/fastlane/blob/master/docs/CodeSigning.md).
+You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/docs/CodeSigning.md).
 
 ```ruby
 ipa(
@@ -161,7 +161,7 @@ See how [Product Hunt](https://github.com/fastlane/examples/blob/master/ProductH
 
 ### update_project_provisioning
 
-You should check out the [code signing guide](https://github.com/KrauseFx/fastlane/blob/master/docs/CodeSigning.md) before using this action.
+You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/docs/CodeSigning.md) before using this action.
 
 Updates your Xcode project to use a specific provisioning profile for code signing, so that you can properly build and sign the .ipa file using the [ipa](#ipa) action or a CI service.
 
@@ -191,7 +191,7 @@ update_app_group_identifiers(
 
 ### [xcode_install](https://github.com/neonichu/xcode-install)
 
-Makes sure a specific version of Xcode is installed. If that's not the case, it will automatically be downloaded by the [xcode_install](https://github.com/neonichu/xcode-install) gem. 
+Makes sure a specific version of Xcode is installed. If that's not the case, it will automatically be downloaded by the [xcode_install](https://github.com/neonichu/xcode-install) gem.
 
 This will make sure to use the correct Xcode for later actions.
 
@@ -206,7 +206,15 @@ Use this command if you are supporting multiple versions of Xcode
 xcode_select "/Applications/Xcode6.1.app"
 ```
 
-### [resign](https://github.com/krausefx/sigh#resign)
+### [Xcake](https://github.com/jcampbell05/xcake/)
+
+If you use [Xcake](https://github.com/jcampbell05/xcake/) you can use the `xcake` integration to run `xcake` before building your app.
+
+```ruby
+xcake
+```
+
+### [resign](https://github.com/fastlane/sigh#resign)
 This will resign an ipa with another signing identity and provisioning profile.
 
 If you have used the `ipa` and `sigh` actions, then this action automatically gets the `ipa` and `provisioning_profile` values respectively from those actions and you don't need to manually set them (although you can always override them).
@@ -257,6 +265,26 @@ unlock_keychain(
 )
 ```
 
+By default the keychain is added to the existing. To replace them with the selected keychain you may use `:replace`.
+
+```ruby
+unlock_keychain(
+  path: "/path/to/KeychainName.keychain",
+  password: "mysecret",
+  add_to_search_list: :replace # To only add a keychain use `true` or `:add`.
+)
+```
+
+In addition, the keychain can be selected as a default keychain.
+
+```ruby
+unlock_keychain(
+  path: "/path/to/KeychainName.keychain",
+  password: "mysecret",
+  set_default: true
+)
+```
+
 If the keychain file is located in the standard location `~/Library/Keychains`, then it is sufficient to provide the keychain file name, or file name with its suffix.
 
 ```ruby
@@ -287,7 +315,7 @@ import_certificate certificate_path: "certs/dist.p12", certificate_password: ENV
 Enables the use of the `xcodebuild` tool within fastlane to perform xcode tasks
 such as; archive, build, clean, test, export & more.
 
-You should check out the [code signing guide](https://github.com/KrauseFx/fastlane/blob/master/docs/CodeSigning.md).
+You should check out the [code signing guide](https://github.com/fastlane/fastlane/blob/master/docs/CodeSigning.md).
 
 ```ruby
 # Create an archive. (./build-dir/MyApp.xcarchive)
@@ -380,7 +408,7 @@ clean_build_artifacts
 
 See how [Artsy](https://github.com/fastlane/examples/blob/master/Artsy/eidolon/Fastfile) cleans their build artifacts after building and distributing their app.
 
-### [frameit](https://github.com/KrauseFx/frameit)
+### [frameit](https://github.com/fastlane/frameit)
 By default, the device color will be black
 ```ruby
 frameit
@@ -415,7 +443,7 @@ Uploads dSYM.zip file to [Splunk MINT](https://mint.splunk.com) for crash symbol
 
 ```ruby
 splunkmint(
-	dsym: "My.app.dSYM.zip", 
+	dsym: "My.app.dSYM.zip",
 	api_key: "43564d3a",
 	api_token: "e05456234c4869fb7e0b61"
 )
@@ -435,7 +463,7 @@ recreate_schemes(
 
 ## Testing
 
-### [scan](https://github.com/KrauseFx/scan)
+### [scan](https://github.com/fastlane/scan)
 
 `scan` makes it super easy to run tests of your iOS and Mac applications
 
@@ -547,6 +575,16 @@ oclint(
 )  
 ```
 
+### [SwiftLint](https://github.com/realm/SwiftLint)
+Run SwiftLint for your project.
+
+```
+swiftlint(
+  output_file: 'swiftlint.result.json', # The path of the output file (optional)
+  config_file: '.swiftlint-ci.yml'      # The path of the configuration file (optional)
+)
+```
+
 ### `ensure_no_debug_code`
 
 You don't want any debug code to slip into production. You can use the `ensure_no_debug_code` action to make sure no debug code is in your code base before deploying it:
@@ -561,6 +599,22 @@ ensure_no_debug_code(text: "NSLog",
                 extension: "m")
 ```
 
+### [Appium](http://appium.io/)
+
+Run UI testing by `Appium::Driver` with RSpec.
+
+```ruby
+appium(
+  app_path:  "appium/apps/TargetApp.app",
+  spec_path: "appium/spec",
+  platform:  "iOS",
+  caps: {
+    versionNumber: "9.1",
+    deviceName:    "iPhone 6"
+  }
+)
+```
+
 ## Deploying
 
 ### [pilot](https://github.com/fastlane/pilot)
@@ -572,7 +626,7 @@ pilot(username: "felix@krausefx.com",
 
 More information about the available options `fastlane action pilot` and a more detailed description on the [pilot project page](https://github.com/fastlane/pilot).
 
-### [deliver](https://github.com/KrauseFx/deliver)
+### [deliver](https://github.com/fastlane/deliver)
 ```ruby
 deliver
 ```
@@ -602,7 +656,7 @@ To upload a new binary to Apple TestFlight use the `testflight` action:
 testflight
 ```
 
-This will use [deliver](https://github.com/KrauseFx/deliver) under the hood.
+This will use [deliver](https://github.com/fastlane/deliver) under the hood.
 
 Additionally you can skip the submission of the new binary to the testers to only upload the build:
 
@@ -719,11 +773,11 @@ You can store the changelog in `./fastlane/changelog.txt` and it will automatica
 
 ### [GitHub Releases](https://github.com)
 
-This action creates a new release for your repository on GitHub and can also upload specified assets like `.ipa`s and `.app`s, binary files, changelogs etc. 
+This action creates a new release for your repository on GitHub and can also upload specified assets like `.ipa`s and `.app`s, binary files, changelogs etc.
 
 ```ruby
 github_release = set_github_release(
-  repository_name: "krausefx/fastlane",
+  repository_name: "fastlane/fastlane",
   api_token: ENV['GITHUB_TOKEN'],
   name: "Super New actions",
   tag_name: "v1.22.0",
@@ -756,9 +810,9 @@ Upload your ipa, or any other file you want, to Sonatype Nexus platform.
 
 ```ruby
 nexus_upload(
-  file: "/path/to/file.ipa", 
-  repo_id: "artefacts", 
-  repo_group_id: "com.fastlane", 
+  file: "/path/to/file.ipa",
+  repo_id: "artefacts",
+  repo_group_id: "com.fastlane",
   repo_project_name: "ipa",
   repo_project_version: "1.13",
   endpoint: "http://localhost:8081",
@@ -789,7 +843,7 @@ You can add some options:
 ```ruby
 appaloosa(
   binary: '/path/to/binary.ipa', # path tor your IPA or APK
-  store_id: 'your_store_id', # you'll be asked for your email if you are not already registered 
+  store_id: 'your_store_id', # you'll be asked for your email if you are not already registered
   api_token: 'your_api_key', # only if already registered
   group_ids: '112, 232, 387', # User group_ids visibility, if it's not specified we 'll publish the app for all users in your store'
   # screenshots: after snapshot step:
@@ -829,6 +883,20 @@ installr(
 ```
 
 For more information about the available options, run `fastlane action installr` or check out the [Installr Documentation](http://help.installrapp.com/api/).
+
+### [TestFairy](https://testfairy.com/)
+
+Upload your iOS build to [TestFairy](https://testfairy.com/)
+
+You can retrieve your API key on [your settings page](https://free.testfairy.com/settings/).
+
+```ruby
+testfairy(
+  api_key: '...',
+  ipa: './ipa_file.ipa',
+  comment: "Build #{lane_context[SharedValues::BUILD_NUMBER]}",
+)
+```
 
 ## Modifying Project
 
@@ -897,6 +965,16 @@ Currently supported SCMs are svn (uses root revision), git-svn (uses svn revisio
 
 There are no options currently available for this action.
 
+### update_project_team
+This action allows you to modify the developer team. This may be useful if you want to use a different team for alpha, beta or distribution.
+
+```ruby
+update_project_team(
+  path: "Example.xcodeproj",
+  teamid: "A3ZZVJ7CNY"
+)
+```
+
 ## update_info_plist
 
 This action allows you to modify your `Info.plist` file before building. This may be useful if you want a separate build for alpha, beta or nightly builds, but don't want a separate target.
@@ -929,7 +1007,7 @@ For example, you can use this to set a different url scheme for the alpha
 or beta version of the app.
 
 ```ruby
-update_url_schemes(path: "path/to/Info.plist", 
+update_url_schemes(path: "path/to/Info.plist",
             url_schemes: ["com.myapp"])
 ```
 
@@ -958,7 +1036,7 @@ match(type: "appstore", app_identifier: "tools.fastlane.app")
 match(type: "development", readonly: true)
 ```
 
-### [sigh](https://github.com/KrauseFx/sigh)
+### [sigh](https://github.com/fastlane/sigh)
 This will generate and download your App Store provisioning profile. `sigh` will store the generated profile in the current folder.
 
 ```ruby
@@ -977,7 +1055,7 @@ sigh(
 
 See how [Wikpedia](https://github.com/fastlane/examples/blob/master/Wikipedia/Fastfile) uses `sigh` to automatically retrieve the latest provisioning profile.
 
-### [PEM](https://github.com/KrauseFx/PEM)
+### [PEM](https://github.com/fastlane/PEM)
 
 This will generate a new push profile if necessary (the old one is about to expire).
 
@@ -1003,9 +1081,9 @@ Use the `fastlane action pem` command to view all available options.
 
 [Product Hunt](https://github.com/fastlane/examples/blob/master/ProductHunt/Fastfile) uses `PEM` to automatically create a new push profile for Parse.com if necessary before a release.
 
-### [cert](https://github.com/KrauseFx/cert)
+### [cert](https://github.com/fastlane/cert)
 
-The `cert` action can be used to make sure to have the latest signing certificate installed. More information on the [`cert` project page](https://github.com/KrauseFx/cert).
+The `cert` action can be used to make sure to have the latest signing certificate installed. More information on the [`cert` project page](https://github.com/fastlane/cert).
 
 ```ruby
 cert
@@ -1022,7 +1100,7 @@ cert(
 )
 ```
 
-### [produce](https://github.com/KrauseFx/produce)
+### [produce](https://github.com/fastlane/produce)
 
 Create new apps on iTunes Connect and Apple Developer Portal. If the app already exists, `produce` will not do anything.
 
@@ -1076,13 +1154,14 @@ This action turns your git commit history into formatted changelog text.
 
 ```ruby
 # Collects commits since your last tag and returns a concatenation of their subjects and bodies
-changelog_from_git_commits 
+changelog_from_git_commits
 
 # Advanced options
 changelog_from_git_commits(
   between: ['7b092b3', 'HEAD'], # Optional, lets you specify a revision/tag range between which to collect commit info
   pretty: '- (%ae) %s', # Optional, lets you provide a custom format to apply to each commit when generating the changelog text
   match_lightweight_tag: false # Optional, lets you ignore lightweight (non-annotated) tags when searching for the last tag
+  include_merges: true # Optional, lets you filter out merge commits
 )
 ```
 
@@ -1104,6 +1183,19 @@ Simple action to get the latest git tag
 ```ruby
 last_git_tag
 ```
+
+If you are using this action on a **shallow clone**, *the default with some CI systems like Bamboo*, you need to ensure that you have also have pulled all the git tags appropriately.  Assuming your git repo has the correct remote set you can issue `sh("git fetch --tags")`
+
+```ruby
+  #Only fetch tags if a remote is set
+  remote_count = sh("git remote show | wc -l")
+  if remote_count > 0.to_s
+    sh("git fetch --tags")
+    last_git_tag
+  end
+```
+
+
 
 ### git_branch
 
@@ -1262,7 +1354,7 @@ reset_git_repo(
 You can easily receive information about a specific release from GitHub.com
 
 ```ruby
-release = get_github_release(url: "KrauseFx/fastlane", version: "1.0.0")
+release = get_github_release(url: "fastlane/fastlane", version: "1.0.0")
 puts release['name']
 ```
 
@@ -1276,7 +1368,7 @@ This is useful if you have shared lanes across multiple apps and you want to sto
 
 ```ruby
 import_from_git(
-  url: 'git@github.com:KrauseFx/fastlane.git', # The url of the repository to import the Fastfile from.
+  url: 'git@github.com:fastlane/fastlane.git', # The url of the repository to import the Fastfile from.
   branch: 'HEAD', # The branch to checkout on the repository. Defaults to `HEAD`.
   path: 'fastlane/Fastfile' # The path of the Fastfile in the repository. Defaults to `fastlane/Fastfile`.
 )
@@ -1294,7 +1386,7 @@ puts commit[:author]
 
 ### create_pull_request
 
-Create a new pull request. 
+Create a new pull request.
 
 ```ruby
 create_pull_request(
@@ -1474,7 +1566,7 @@ Display a notification using the OS X notification centre. Uses [terminal-notifi
 [ByMyEyes](https://github.com/fastlane/examples/blob/master/BeMyEyes/Fastfile) uses the `notify` action to show a success message after `fastlane` finished executing.
 
 ### [Testmunk](http://testmunk.com)
-Run your functional tests on real iOS devices over the cloud (for free on an iPod). With this simple [testcase](https://github.com/testmunk/TMSample/blob/master/testcases/smoke/smoke_features.zip) you can ensure your app launches and there is no crash at launch. Tests can be extended with [Testmunk's library](http://docs.testmunk.com/en/latest/steps.html) or custom steps. More details about this action can be found in [`testmunk.rb`](https://github.com/KrauseFx/fastlane/blob/master/lib/fastlane/actions/testmunk.rb).
+Run your functional tests on real iOS devices over the cloud (for free on an iPod). With this simple [testcase](https://github.com/testmunk/TMSample/blob/master/testcases/smoke/smoke_features.zip) you can ensure your app launches and there is no crash at launch. Tests can be extended with [Testmunk's library](http://docs.testmunk.com/en/latest/steps.html) or custom steps. More details about this action can be found in [`testmunk.rb`](https://github.com/fastlane/fastlane/blob/master/lib/fastlane/actions/testmunk.rb).
 
 ```ruby
 ENV['TESTMUNK_EMAIL'] = 'email@email.com'
@@ -1483,7 +1575,7 @@ testmunk
 ```
 
 ### [Podio](http://podio.com)
-Creates an item within your Podio app. In case an item with the given identifying value already exists within your Podio app, it updates that item. To find out how to get your authentication credentials see [Podio API documentation](https://developers.podio.com). To find out how to get your identifying field (external ID) and general info about Podio item see [tutorials](https://developers.podio.com/examples/items). 
+Creates an item within your Podio app. In case an item with the given identifying value already exists within your Podio app, it updates that item. To find out how to get your authentication credentials see [Podio API documentation](https://developers.podio.com). To find out how to get your identifying field (external ID) and general info about Podio item see [tutorials](https://developers.podio.com/examples/items).
 
 ```ruby
 ENV["PODIO_ITEM_IDENTIFYING_FIELD"] = "String specifying the field key used for identification of an item"
@@ -1529,7 +1621,7 @@ end
 
 ### sonar
 
-This action will execute `sonar-runner` to run SonarQube analysis on your source code. 
+This action will execute `sonar-runner` to run SonarQube analysis on your source code.
 
 ```ruby
 sonar(
@@ -1626,13 +1718,22 @@ say "I can speak"
 You can store a string in the clipboard running
 
 ```ruby
-clipboard(value: "https://github.com/KrauseFx/fastlane")
+clipboard(value: "https://github.com/fastlane/fastlane")
 ```
 
 This can be used to store some generated URL or value for easy copy & paste (e.g. the download link):
 
 ```ruby
 clipboard(value: lane_context[SharedValues::HOCKEY_DOWNLOAD_LINK])
+```
+
+### [CLOC](https://github.com/AlDanial/cloc)
+
+You can generate a Line Count (that is readable by Jenkins - see the [SLOCCount Plugin](https://wiki.jenkins-ci.org/display/JENKINS/SLOCCount+Plugin) for more details).  This action is a wrapper around the cloc tool:
+
+```ruby
+# Result will be an XML report file: reports/cloc.xml
+cloc(exclude_dir: 'ThirdParty,Resources', output_directory: 'reports', source_directory: 'MyCoolApp')
 ```
 
 ### is_ci?
